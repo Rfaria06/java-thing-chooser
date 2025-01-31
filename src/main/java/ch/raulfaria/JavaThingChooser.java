@@ -1,5 +1,10 @@
 package ch.raulfaria;
 
+import ch.raulfaria.collector.ArgvCandidateCollector;
+import ch.raulfaria.collector.CandidateCollector;
+import ch.raulfaria.collector.InteractiveInputCandidateCollector;
+import ch.raulfaria.collector.OverpassApiSuggestionCollector;
+
 import java.util.*;
 
 public class JavaThingChooser {
@@ -10,6 +15,8 @@ public class JavaThingChooser {
         final CandidateCollector collector;
         if (argv.isEmpty()) {
             collector = new InteractiveInputCandidateCollector();
+        } else if (argv.getFirst().equalsIgnoreCase("-suggest")) {
+            collector = OverpassApiSuggestionCollector.getInstance();
         } else {
             collector = new ArgvCandidateCollector(argv);
         }

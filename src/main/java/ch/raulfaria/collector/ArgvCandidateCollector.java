@@ -1,4 +1,6 @@
-package ch.raulfaria;
+package ch.raulfaria.collector;
+
+import ch.raulfaria.NumberedCandidate;
 
 import java.util.ArrayList;
 import java.util.List;
