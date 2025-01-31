@@ -33,3 +33,5 @@ jobs:
           asset_path: build/libs/java-thing-chooser-1.0-SNAPSHOT-all.jar
           asset_name: java-thing-chooser-${{ github.event.release.tag_name }}.jar
           asset_content_type: application/java-archive
+        env:
+          GITHUB_TOKEN: ${{ secrets.UPLOAD_TOKEN }}
