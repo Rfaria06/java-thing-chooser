@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class JavaThingChooser {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         final List<String> candidates = new ArrayList<>();
         final List<Integer> numbers = new ArrayList<>();
         final Scanner scanner = new Scanner(System.in);
@@ -33,6 +33,20 @@ public class JavaThingChooser {
         final Random random = new Random();
         final int chosenIndex = random.nextInt(0, candidates.size());
 
-        System.out.println("The winner is number " + numbers.get(chosenIndex) + ": " + candidates.get(chosenIndex));
+        System.out.println("Waiting for quantum particles to be aligned...");
+        Thread.sleep(1500L);
+        System.out.println("Calculating answer...");
+        Thread.sleep(1500L);
+        System.out.println("Taking decision...");
+        Thread.sleep(1000L);
+
+        System.out.print("The winner is");
+        for (int i = 0; i < 5; i++) {
+            Thread.sleep(800L);
+            System.out.print(".");
+        }
+        System.out.println();
+
+        System.out.println("Number " + numbers.get(chosenIndex) + ": " + candidates.get(chosenIndex));
     }
 }
