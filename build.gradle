@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'ch.raulfaria'
@@ -24,12 +25,4 @@ test {
 
 application {
     mainClass = 'ch.raulfaria.JavaThingChooser'
-}
-
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'ch.raulfaria.JavaThingChooser'
-        )
-    }
 }

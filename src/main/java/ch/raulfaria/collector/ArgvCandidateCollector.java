@@ -5,7 +5,7 @@ import ch.raulfaria.NumberedCandidate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArgvCandidateCollector implements CandidateCollector {
+public final class ArgvCandidateCollector implements CandidateCollector {
 
     private final List<String> argvInput;
 
@@ -15,14 +15,6 @@ public class ArgvCandidateCollector implements CandidateCollector {
 
     @Override
     public List<NumberedCandidate> collect() {
-        final List<NumberedCandidate> numberedCandidates = new ArrayList<>();
-
-        int number = 1;
-        for (final String input : argvInput) {
-            numberedCandidates.add(new NumberedCandidate(input, number));
-            number++;
-        }
-
-        return numberedCandidates;
+        return NumberedCandidate.listOf(argvInput);
     }
 }

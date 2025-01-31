@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class InteractiveInputCandidateCollector implements CandidateCollector {
+public final class InteractiveInputCandidateCollector implements CandidateCollector {
 
     private final Scanner scanner = new Scanner(System.in);
 
