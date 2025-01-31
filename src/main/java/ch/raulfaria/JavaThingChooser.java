@@ -1,30 +1,51 @@
 package ch.raulfaria;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class JavaThingChooser {
+
     public static void main(String[] args) throws InterruptedException {
-        final List<String> candidates = new ArrayList<>();
-        final List<Integer> numbers = new ArrayList<>();
-        final Scanner scanner = new Scanner(System.in);
+        final JavaThingChooser javaThingChooser = new JavaThingChooser();
+        javaThingChooser.run(new ArrayList<>(List.of(args)));
+    }
 
-        System.out.println("Enter all candidates. Enter '-done' when you have added all.");
+    private final Scanner scanner = new Scanner(System.in);
+    private final Random random = new Random();
+
+    public void run(final List<String> argvInput) throws InterruptedException {
+        final List<NumberedCandidate> candidates = collectCandidates(argvInput);
+
+        chooseWinner(candidates);
+    }
+
+    private List<NumberedCandidate> collectCandidates(final List<String> argvInput) {
+        final List<NumberedCandidate> candidates = new ArrayList<>();
+
         int itemNumber = 1;
-        while (true) {
-            System.out.print(itemNumber + ". ");
-            final String input = scanner.nextLine();
-            if (input == null || input.equals("-done")) {
-                break;
-            }
+        if (argvInput.isEmpty()) {
+            System.out.println("Enter all candidates. Enter '-done' when you have added all.");
 
-            candidates.add(input);
-            numbers.add(itemNumber);
-            itemNumber++;
+            while (true) {
+                System.out.print(itemNumber + ". ");
+                final String input = scanner.nextLine();
+                if (input == null || input.equals("-done")) {
+                    break;
+                }
+
+                candidates.add(new NumberedCandidate(input, itemNumber));
+                itemNumber++;
+            }
+        } else {
+            for (final String item : argvInput) {
+                candidates.add(new NumberedCandidate(item, itemNumber));
+                itemNumber++;
+            }
         }
 
+        return candidates;
+    }
+
+    private void chooseWinner(final List<NumberedCandidate> candidates) throws InterruptedException {
         if (candidates.isEmpty()) {
             System.out.println("No candidates entered.");
             return;
@@ -32,6 +53,7 @@ public class JavaThingChooser {
 
         final Random random = new Random();
         final int chosenIndex = random.nextInt(0, candidates.size());
+        final NumberedCandidate chosenCandidate = candidates.get(chosenIndex);
 
         System.out.println("Waiting for quantum particles to be aligned...");
         Thread.sleep(1500L);
@@ -47,6 +69,6 @@ public class JavaThingChooser {
         }
         System.out.println();
 
-        System.out.println("Number " + numbers.get(chosenIndex) + ": " + candidates.get(chosenIndex));
+        System.out.println("Number " + chosenCandidate.number() + ": " + chosenCandidate.candidate());
     }
 }
