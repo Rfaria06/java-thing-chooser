@@ -1,20 +1,15 @@
 package ch.raulfaria;
 
+import ch.raulfaria.collector.*;
+
 import java.util.*;
 
-public class JavaThingChooser {
+public final class JavaThingChooser {
 
     public static void main(String[] args) throws InterruptedException {
-        final List<String> argv = new ArrayList<>(List.of(args));
-
-        final CandidateCollector collector;
-        if (argv.isEmpty()) {
-            collector = new InteractiveInputCandidateCollector();
-        } else {
-            collector = new ArgvCandidateCollector(argv);
-        }
-
-        new JavaThingChooser().run(collector);
+        final CollectorResolver collectorResolver = new CollectorResolver(args);
+        
+        new JavaThingChooser().run(collectorResolver.resolve());
     }
 
     public void run(final CandidateCollector collector) throws InterruptedException {

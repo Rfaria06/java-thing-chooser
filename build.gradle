@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'ch.raulfaria'
@@ -10,6 +12,9 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.json:json:20250107'
+
+    testImplementation 'org.assertj:assertj-core:3.27.3'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
@@ -18,10 +23,6 @@ test {
     useJUnitPlatform()
 }
 
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'ch.raulfaria.JavaThingChooser'
-        )
-    }
+application {
+    mainClass = 'ch.raulfaria.JavaThingChooser'
 }
