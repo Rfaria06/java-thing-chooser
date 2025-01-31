@@ -5,44 +5,22 @@ import java.util.*;
 public class JavaThingChooser {
 
     public static void main(String[] args) throws InterruptedException {
-        final JavaThingChooser javaThingChooser = new JavaThingChooser();
-        javaThingChooser.run(new ArrayList<>(List.of(args)));
-    }
+        final List<String> argv = new ArrayList<>(List.of(args));
 
-    private final Scanner scanner = new Scanner(System.in);
-    private final Random random = new Random();
-
-    public void run(final List<String> argvInput) throws InterruptedException {
-        final List<NumberedCandidate> candidates = collectCandidates(argvInput);
-
-        chooseWinner(candidates);
-    }
-
-    private List<NumberedCandidate> collectCandidates(final List<String> argvInput) {
-        final List<NumberedCandidate> candidates = new ArrayList<>();
-
-        int itemNumber = 1;
-        if (argvInput.isEmpty()) {
-            System.out.println("Enter all candidates. Enter '-done' when you have added all.");
-
-            while (true) {
-                System.out.print(itemNumber + ". ");
-                final String input = scanner.nextLine();
-                if (input == null || input.equals("-done")) {
-                    break;
-                }
-
-                candidates.add(new NumberedCandidate(input, itemNumber));
-                itemNumber++;
-            }
+        final CandidateCollector collector;
+        if (argv.isEmpty()) {
+            collector = new InteractiveInputCandidateCollector();
         } else {
-            for (final String item : argvInput) {
-                candidates.add(new NumberedCandidate(item, itemNumber));
-                itemNumber++;
-            }
+            collector = new ArgvCandidateCollector(argv);
         }
 
-        return candidates;
+        new JavaThingChooser().run(collector);
+    }
+
+    public void run(final CandidateCollector collector) throws InterruptedException {
+        final List<NumberedCandidate> candidates = collector.collect();
+
+        chooseWinner(candidates);
     }
 
     private void chooseWinner(final List<NumberedCandidate> candidates) throws InterruptedException {
@@ -69,6 +47,6 @@ public class JavaThingChooser {
         }
         System.out.println();
 
-        System.out.println("Number " + chosenCandidate.number() + ": " + chosenCandidate.candidate());
+        System.out.println("Number " + chosenCandidate.number() + ": " + chosenCandidate.name());
     }
 }

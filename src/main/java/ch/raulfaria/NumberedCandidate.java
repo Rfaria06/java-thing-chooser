@@ -1,3 +1,3 @@
 package ch.raulfaria;
 
-public record NumberedCandidate(String candidate, int number) {}
+public record NumberedCandidate(String name, int number) {}
